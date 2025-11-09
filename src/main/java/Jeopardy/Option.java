@@ -8,4 +8,12 @@ public class Option {
         this.header = header;
         this.content = content;
     }
+
+    public char getHeader() {
+        return header;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }

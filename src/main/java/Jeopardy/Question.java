@@ -15,7 +15,19 @@ public class Question {
         this.correctAnswer = correctAnswer;
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public String getQuestion(){
+        return question;
+    }
+
     public List<Option> getOptions() {
         return options;
+    }
+
+    public char getCorrectAnswer() {
+        return correctAnswer;
     }
 }
