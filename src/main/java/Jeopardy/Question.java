@@ -7,12 +7,14 @@ public class Question {
     private String question;
     private List<Option> options;
     private char correctAnswer;
+    private boolean answered;
 
     public Question(int score, String question, List<Option> options, char correctAnswer){
         this.score = score;
         this.question = question;
         this.options = options;
         this.correctAnswer = correctAnswer;
+        this.answered = false;
     }
 
     public int getScore() {

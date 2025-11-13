@@ -20,5 +20,8 @@ public class Main {
                 System.out.println(q.getCorrectAnswer());
             }
         }
+
+        new MainGameFrame(categories);
+
     }
 }

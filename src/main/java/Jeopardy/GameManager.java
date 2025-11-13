@@ -18,6 +18,6 @@ public class GameManager {
     }
 
     public void addPlayer(Player player){
-        players.add(player);
+        this.players.add(player);
     }
 }
