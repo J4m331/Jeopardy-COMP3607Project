@@ -69,9 +69,17 @@ public class GameEngine {
         }
 
         // Logging
-        log("Player " + player.getName() + " selected category '" + category.getName() + "'");
-        log("Player " + player.getName() + " selected question value " + points + " in '" + category.getName() + "'");
-        log("Player " + player.getName() + " answered '" + givenAnswer + "' → " + result + " (Score now " + player.getScore() + ")");
+        logger.logEvent(
+            new LogEvent.Builder()
+                .playerId(player.getId())
+                .activity("Select Category")
+                .category(category.getName())
+                .questionValue(points)
+                .answerGiven(String.valueOf(givenAnswer))
+                .result(result)
+                .scoreAfterPlay(String.valueOf(player.getScore()))
+                .build()
+        );
 
         // Rundown entry
         sessionRundown.add(
@@ -140,8 +148,13 @@ public class GameEngine {
     private void log(String activity) {
         logger.logEvent(
             new LogEvent.Builder()
+                .playerId(-1) // indicates system
                 .activity(activity)
+                .category("")
+                .questionValue(0)
+                .answerGiven("")
                 .result("OK")
+                .scoreAfterPlay("")
                 .build()
         );
     }
