@@ -16,4 +16,10 @@ public class Option {
     public String getContent() {
         return content;
     }
+    
+    @Override
+    public String toString() {
+        return header + ": " + content;
+    }
+
 }

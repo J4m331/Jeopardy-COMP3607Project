@@ -32,4 +32,13 @@ public class Question {
     public char getCorrectAnswer() {
         return correctAnswer;
     }
+
+    public boolean isAnswered() {
+        return answered;
+    }
+
+    public void markAnswered() {
+        this.answered = true;
+    }
+
 }
