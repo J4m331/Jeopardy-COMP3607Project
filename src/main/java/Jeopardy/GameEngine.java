@@ -89,7 +89,9 @@ public class GameEngine {
             JOptionPane.INFORMATION_MESSAGE
         );
 
-        advanceTurn();
+        if (!correct) {
+            advanceTurn();
+        }
     }
 
     public boolean allQuestionsAnswered() {
