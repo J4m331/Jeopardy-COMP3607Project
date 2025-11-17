@@ -9,6 +9,7 @@ public class GameEngine {
     private final List<Player> players;
     private final List<Category> categories;
     private final EventLogger logger = EventLogger.getLgInstance();
+    private MainGameFrame frame;
 
     private int currentPlayerIndex = 0;
     private final List<String> sessionRundown = new ArrayList<>();
@@ -26,6 +27,10 @@ public class GameEngine {
             return null;
         }
         return players.get(currentPlayerIndex);
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 
     public void advanceTurn() {
@@ -92,6 +97,10 @@ public class GameEngine {
         if (!correct) {
             advanceTurn();
         }
+
+        if (frame != null) {
+            frame.updateStatusDisplay();
+        }
     }
 
     public boolean allQuestionsAnswered() {
@@ -121,6 +130,10 @@ public class GameEngine {
                 "Game Finished",
                 JOptionPane.INFORMATION_MESSAGE
         );
+    }
+
+    public void setFrame(MainGameFrame frame) {
+        this.frame = frame;
     }
 
     // === Simple String Logger Shortcut ===
