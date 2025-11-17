@@ -109,6 +109,10 @@ public class GameEngine {
         if (frame != null) {
             frame.updateStatusDisplay();
         }
+
+        if (allQuestionsAnswered()) {
+            generateReportAndFinish();
+        }
     }
 
     public boolean allQuestionsAnswered() {

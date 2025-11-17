@@ -1,8 +1,0 @@
-Case_ID,Player_ID,Activity,Timestamp,Category,Question_Value,Answer_Given,Result,Score_After_Play
-1,1,Enter Player Name,2025-11-17 01:06:33,,0,,OK,fs
-2,2,Enter Player Name,2025-11-17 01:06:34,,0,,OK,asf
-3,-1,Select Player Count,2025-11-17 01:06:34,,2,,OK,
-4,-1,Start Game,2025-11-17 01:06:34,,0,,OK,
-5,-1,Load File,2025-11-17 01:06:34,,0,,OK,
-6,1,Select Category,2025-11-17 01:06:40,Variables & Data Types,100,A,CORRECT,100
-7,1,Select Category,2025-11-17 01:06:45,Control Structures,200,C,INCORRECT,-100
