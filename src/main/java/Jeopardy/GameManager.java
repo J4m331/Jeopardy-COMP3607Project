@@ -1,30 +1,50 @@
 package Jeopardy;
 
-import java.util.ArrayList;
 import java.util.List;
 
-//GameManager class to manage players in the game using Singleton pattern
-public class GameManager {
+
+public class GameManager implements ScoreObserver {
     private static GameManager gmInstance;
-    private List<Player> players = new ArrayList<>();;
+    private List<Player> players;
+    private Player currentPlayer;
+    private int playerIndex;
+    private int playerCount;
 
-    private GameManager(){}
-
+    public GameManager(){
+        this.players = null;
+    }
+/*
     public static GameManager getGmInstance(){
         if(gmInstance == null)
             gmInstance = new GameManager();
         return gmInstance;
+    }*/
+
+    public void addPlayers(List<Player> players){
+        this.players = players;
+        currentPlayer = this.players.getFirst();
+        playerIndex = 0;
+        playerCount = players.size();
     }
 
-    public void addPlayer(Player player){
-        this.players.add(player);
+    @Override
+    public void UpdateScore(int score){
+        currentPlayer.addToScore(score);
+        shiftPlayer();
     }
 
-    public List<Player> getPlayers() {
-        return players;
+    public void shiftPlayer(){
+        System.out.println(currentPlayer.getScore());
+        playerIndex = playerIndex + 1;
+        if(playerIndex >= playerCount)
+            playerIndex = 0;
+        currentPlayer = players.get(playerIndex);
+        System.out.println(playerIndex);
+        System.out.println(currentPlayer.getName());
     }
 
-    public void clearPlayers(){
-        this.players.clear();
+    @Override
+    public void Update(){
+
     }
 }

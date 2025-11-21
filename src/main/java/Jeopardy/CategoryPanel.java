@@ -2,50 +2,30 @@ package Jeopardy;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.ArrayList;
 
-public class CategoryPanel extends JPanel{
+public class CategoryPanel extends JPanel implements ScoreComponentLink{
 
     private JPanel panel = new JPanel(new GridLayout(6,1));
-    private final Category category;
-    private final GameEngine engine;
+    private List<QuestionButton> questionButtons;
 
-    public CategoryPanel(Category c, GameEngine engine){
-        this.category = c;
-        this.engine = engine;
-
+    public CategoryPanel(Category c){
         JTextArea categoryTitle = new JTextArea(c.getName());
-
+        questionButtons = new ArrayList<QuestionButton>();
         panel.add(categoryTitle);
 
         for(Question q:c.getQuestions()){
-            JButton questionBtn = new JButton(q.getScore()+"");
-            questionBtn.setEnabled(!q.isAnswered());
-            questionBtn.addActionListener(new QuestionButtonListener(q, questionBtn));
-            panel.add(questionBtn);
+            QuestionButton questionBtn = new QuestionButton(q);
+            panel.add(questionBtn.getButton());
+            questionButtons.add(questionBtn);
         }
         add(panel);
     }
 
-    private class QuestionButtonListener implements ActionListener {
-        private final Question question;
-        private final JButton sourceBtn;
-        
-        public QuestionButtonListener(Question q, JButton btn){
-            this.question = q;
-            this.sourceBtn = btn;
-        }
-        
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (question.isAnswered()) {
-                sourceBtn.setEnabled(false);
-                return;
-            }
-            // Open question dialog
-            QuestionDialog dialog = new QuestionDialog(SwingUtilities.getWindowAncestor(CategoryPanel.this), question, category, engine, sourceBtn);
-            dialog.setVisible(true);
-        }
+    @Override
+    public void LinkObserver(Observer o) {
+        for(QuestionButton qBtn:this.questionButtons)
+            qBtn.LinkObserver(o);
     }
 }

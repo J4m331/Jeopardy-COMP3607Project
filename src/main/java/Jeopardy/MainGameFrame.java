@@ -1,73 +1,46 @@
 package Jeopardy;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 
-public class MainGameFrame extends JFrame{
+public class MainGameFrame extends JFrame implements ScoreComponentLink {
 
     private JPanel mainPanel;
-    private final GameEngine engine;
-    private JLabel currentPlayerLabel;
-    private JLabel scoresLabel;
+    private JPanel mainGamePanel;
+    private List<CategoryPanel> categoryPanels;
 
-
-    public MainGameFrame(List<Category> categories, List<Player> players){
-        mainPanel = new JPanel(new GridLayout(1,categories.size()));
+    public MainGameFrame(List<Category> categories, Observer gameManager){
+        mainPanel = new JPanel(new BorderLayout());
+        mainGamePanel = new JPanel(new GridLayout(1,5));
         setTitle("Jeopardy");
         setSize(1920,1080);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        engine = new GameEngine(players, categories);
-        engine.setFrame(this);
+        categoryPanels = new ArrayList<CategoryPanel>();
 
         for(Category c:categories){
-            CategoryPanel cPanel = new CategoryPanel(c, engine);
-            mainPanel.add(cPanel);
+            CategoryPanel cPanel = new CategoryPanel(c);
+            mainGamePanel.add(cPanel);
+            categoryPanels.add(cPanel);
         }
+
+        mainPanel.add(mainGamePanel,BorderLayout.CENTER);
 
         add(mainPanel);
 
-        JPanel statusPanel = new JPanel(new GridLayout(2,1));
-        currentPlayerLabel = new JLabel();
-        scoresLabel = new JLabel();
-
-        statusPanel.add(currentPlayerLabel);
-        statusPanel.add(scoresLabel);
-
-        add(statusPanel, BorderLayout.SOUTH);
-
-        updateStatusDisplay(); 
-
-        // bottom controls: show current player, generate report, exit
-        JPanel controls = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JButton reportBtn = new JButton("Generate Report & Exit");
-        
-        reportBtn.addActionListener(e -> {
-            engine.generateReportAndFinish();
-            System.exit(0);
-        });
-        
-        controls.add(reportBtn);
-
         setVisible(true);
+
+        LinkObserver(gameManager);
     }
 
-    public void updateStatusDisplay() {
-        Player p = engine.getCurrentPlayer();
 
-        currentPlayerLabel.setText("Current Player: " + p.getName());
-
-        StringBuilder sb = new StringBuilder("Scores: ");
-        for (Player player : engine.getPlayers()) {
-            sb.append(player.getName())
-            .append("=")
-            .append(player.getScore())
-            .append("   ");
+    @Override
+    public void LinkObserver(Observer o) {
+        for(CategoryPanel cPanel:this.categoryPanels) {
+            cPanel.LinkObserver(o);
         }
-
-        scoresLabel.setText(sb.toString());
     }
-
 }

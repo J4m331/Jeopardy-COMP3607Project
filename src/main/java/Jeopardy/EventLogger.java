@@ -19,7 +19,7 @@ public class EventLogger {
         }
     }
 
-    public static EventLogger getLgInstance() {
+    public static EventLogger getElInstance() {
         if (lgInstance == null)
             lgInstance = new EventLogger();
         return lgInstance;
