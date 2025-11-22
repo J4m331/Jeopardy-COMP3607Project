@@ -2,14 +2,16 @@ package Jeopardy;
 
 import javax.swing.*;
 
-public class QuestionButton implements ScoreComponentLink, ButtonLockObserver{
+public class QuestionButton implements ScoreComponentLink, ButtonLockObserver, GameManagerLink, EventLogLink{
 
     private JButton qBtn;
     private QuestionWindow qW;
+    private boolean locked;
 
-    public QuestionButton(Question q){
+    public QuestionButton(Question q, Category c){
         qBtn = new JButton(q.getScore()+"");
-        this.qW = new QuestionWindow(q);
+        this.qW = new QuestionWindow(q,c);
+        this.locked = false;
         LinkLockObserver(this);
         qBtn.addActionListener(e ->{
             this.qW.show();
@@ -32,5 +34,16 @@ public class QuestionButton implements ScoreComponentLink, ButtonLockObserver{
     @Override
     public void Update() {
         this.qBtn.setEnabled(false);
+        this.locked = true;
+    }
+
+    @Override
+    public void LinkGameManager(GameManager gM) {
+        this.qW.LinkGameManager(gM);
+    }
+
+    @Override
+    public void LinkEventLog(Observer o) {
+        this.qW.LinkEventLog(o);
     }
 }

@@ -4,13 +4,18 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args){
-        EventLogger eL = EventLogger.getElInstance();
-        List<Category> categories = new FileChooserPromptWindow().getCategories();
-        List<Player> players = new AddPlayersPromptWindow().getPlayers();
+        EventLogger eventLogger = EventLogger.getEventLoggerInstance();
+
+        FileChooserPromptWindow fileChooser = new FileChooserPromptWindow(eventLogger);
+        List<Category> categories = fileChooser.getCategories();
+
+        AddPlayersPromptWindow playersWindow = new AddPlayersPromptWindow(eventLogger);
+        List<Player> players = playersWindow.getPlayers();
+
         GameManager gM = new GameManager();
         gM.addPlayers(players);
 
-        new MainGameFrame(categories, gM);
+        new MainGameFrame(categories, gM, gM, eventLogger);
 
     }
 }

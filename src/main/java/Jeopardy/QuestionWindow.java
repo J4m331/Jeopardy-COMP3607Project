@@ -5,12 +5,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionWindow implements ScoreComponentLink, ButtonLockLink{
+public class QuestionWindow implements ScoreComponentLink, ButtonLockLink, GameManagerLink, EventLogLink{
     private JDialog dialog;
     private List<OptionButton> options;
     private int score;
+    private Category category;
 
-    public QuestionWindow(Question q){
+    public QuestionWindow(Question q,Category c){
         //frame to hold dialog
         JFrame frame = new JFrame();
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,6 +25,7 @@ public class QuestionWindow implements ScoreComponentLink, ButtonLockLink{
 
         dialog.add(new JLabel(q.getQuestion()));
         score = q.getScore();
+        category = c;
 
         options = new ArrayList<OptionButton>();
 
@@ -50,6 +52,10 @@ public class QuestionWindow implements ScoreComponentLink, ButtonLockLink{
         return this.score;
     }
 
+    public Category getCategory(){
+        return this.category;
+    }
+
     @Override
     public void LinkObserver(Observer o) {
         for(OptionButton oB:options)
@@ -60,5 +66,17 @@ public class QuestionWindow implements ScoreComponentLink, ButtonLockLink{
     public void LinkLockObserver(Observer o) {
         for(OptionButton oB:options)
             oB.LinkLockObserver(o);
+    }
+
+    @Override
+    public void LinkGameManager(GameManager gM) {
+        for(OptionButton oB:options)
+            oB.LinkGameManager(gM);
+    }
+
+    @Override
+    public void LinkEventLog(Observer o) {
+        for(OptionButton oB:options)
+            oB.LinkEventLog(o);
     }
 }

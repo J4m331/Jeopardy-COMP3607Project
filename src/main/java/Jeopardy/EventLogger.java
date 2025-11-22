@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 
 // EventLogger class to log game events to a file
-public class EventLogger {
+public class EventLogger implements LogObserver{
     private static EventLogger lgInstance;
     private final String logFilePath = "game_event_log.csv";
     private int caseId = 1;
@@ -19,7 +19,7 @@ public class EventLogger {
         }
     }
 
-    public static EventLogger getElInstance() {
+    public static EventLogger getEventLoggerInstance() {
         if (lgInstance == null)
             lgInstance = new EventLogger();
         return lgInstance;
@@ -32,7 +32,7 @@ public class EventLogger {
                     .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
             fw.append(caseId + ",")
-              .append(event.getPlayerId() + ",")
+              .append(event.getPlayerName() + ",")
               .append(format(event.getActivity()) + ",")
               .append(timestamp + ",")
               .append(format(event.getCategory()) + ",")
@@ -54,5 +54,15 @@ public class EventLogger {
             return "\"" + input.replace("\"", "\"\"") + "\"";
         }
         return input;
+    }
+
+    @Override
+    public void Update(LogEvent logEvent) {
+        this.logEvent(logEvent);
+    }
+
+    @Override
+    public void Update() {
+
     }
 }

@@ -2,7 +2,7 @@ package Jeopardy;
 
 // LogEvent class using Builder pattern
 public class LogEvent {
-    private int playerId;
+    private String playerName;
     private String activity;
     private String category;
     private int questionValue;
@@ -14,7 +14,7 @@ public class LogEvent {
     public static class Builder {
         private final LogEvent event = new LogEvent();
 
-        public Builder playerId(int id) { event.playerId = id; return this; }
+        public Builder playerName(String name) { event.playerName = name; return this; }
         public Builder activity(String a) { event.activity = a; return this; }
         public Builder category(String c) { event.category = c; return this; }
         public Builder questionValue(int q) { event.questionValue = q; return this; }
@@ -26,7 +26,7 @@ public class LogEvent {
     }
 
     // Getters
-    public int getPlayerId() { return playerId; }
+    public String getPlayerName() { return playerName; }
     public String getActivity() { return activity; }
     public String getCategory() { return category; }
     public int getQuestionValue() { return questionValue; }

@@ -6,11 +6,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPlayersPromptWindow {
+public class AddPlayersPromptWindow implements LogSubject{
     private JDialog dialog;
     private List<Player> players;
+    private LogObserver eventLogger;
 
-    public AddPlayersPromptWindow(){
+    public AddPlayersPromptWindow(Observer o){
+        LinkObserver(o);
         players = new ArrayList<Player>();
         //frame to hold dialog
         JFrame frame = new JFrame();
@@ -34,6 +36,12 @@ public class AddPlayersPromptWindow {
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             int count = playerCount.getSelectedIndex() + 1;
+            LogEvent addPlayersEvent = new LogEvent.Builder()
+                    .playerName("System")
+                    .activity("Select Player Count")
+                    .answerGiven(count+"")
+                    .build();
+            UpdateLogObserver(addPlayersEvent);
             createPlayers(count); //Creates players depending on the number of players selected
         });
 
@@ -44,7 +52,9 @@ public class AddPlayersPromptWindow {
 
     public void createPlayers(int playerCount){
         for(int i = 0; i< playerCount;i++){
-            Player player = new CreatePlayerPromptWindow(i).getPlayer();
+            CreatePlayerPromptWindow createPlayerWindow = new CreatePlayerPromptWindow(i, eventLogger);
+            createPlayerWindow.LinkObserver(eventLogger);
+            Player player = createPlayerWindow.getPlayer();
             players.add(player);
         }
         this.dialog.dispose();
@@ -52,5 +62,30 @@ public class AddPlayersPromptWindow {
 
     public List<Player> getPlayers(){
         return this.players;
+    }
+
+    @Override
+    public void LinkLogObserver(Observer o) {
+
+    }
+
+    @Override
+    public void UpdateLogObserver(LogEvent logEvent) {
+        this.eventLogger.Update(logEvent);
+    }
+
+    @Override
+    public void LinkObserver(Observer o) {
+        this.eventLogger = (LogObserver) o;
+    }
+
+    @Override
+    public void UnlinkObserver(Observer o) {
+
+    }
+
+    @Override
+    public void UpdateObservers() {
+
     }
 }

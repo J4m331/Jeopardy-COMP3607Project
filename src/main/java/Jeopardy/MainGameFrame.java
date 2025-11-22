@@ -1,23 +1,37 @@
 package Jeopardy;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.*;
 import javax.swing.*;
 
-public class MainGameFrame extends JFrame implements ScoreComponentLink {
+public class MainGameFrame extends JFrame implements ScoreComponentLink , GameManagerLink, EventLogLink{
 
     private JPanel mainPanel;
     private JPanel mainGamePanel;
+    private PlayersPanel playersPanel;
     private List<CategoryPanel> categoryPanels;
 
-    public MainGameFrame(List<Category> categories, Observer gameManager){
+    public MainGameFrame(List<Category> categories, GameManager gM, Observer gameManager, EventLogger eventLogger){
         mainPanel = new JPanel(new BorderLayout());
         mainGamePanel = new JPanel(new GridLayout(1,5));
+        playersPanel = new PlayersPanel(gM.getPlayers());
         setTitle("Jeopardy");
         setSize(1920,1080);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                ReportGenerator.generateTextReport("jeopardyGameReport.txt", gM.getPlayers(), "game_event_log.csv");
+                dispose();
+                System.exit(0);
+            }
+        });
+
 
         categoryPanels = new ArrayList<CategoryPanel>();
 
@@ -28,12 +42,15 @@ public class MainGameFrame extends JFrame implements ScoreComponentLink {
         }
 
         mainPanel.add(mainGamePanel,BorderLayout.CENTER);
+        mainPanel.add(playersPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
-
         setVisible(true);
 
         LinkObserver(gameManager);
+        LinkGameManager(gM);
+        LinkEventLog(eventLogger);
+        gM.LinkObserver(playersPanel);
     }
 
 
@@ -41,6 +58,20 @@ public class MainGameFrame extends JFrame implements ScoreComponentLink {
     public void LinkObserver(Observer o) {
         for(CategoryPanel cPanel:this.categoryPanels) {
             cPanel.LinkObserver(o);
+        }
+    }
+
+    @Override
+    public void LinkGameManager(GameManager gM) {
+        for(CategoryPanel cPanel:this.categoryPanels){
+            cPanel.LinkGameManager(gM);
+        }
+    }
+
+    @Override
+    public void LinkEventLog(Observer o) {
+        for(CategoryPanel cPanel:this.categoryPanels){
+            cPanel.LinkEventLog(o);
         }
     }
 }

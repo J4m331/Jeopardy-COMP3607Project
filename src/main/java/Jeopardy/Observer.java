@@ -1,5 +1,5 @@
 package Jeopardy;
 
-public interface Observer {
+public abstract interface Observer {
     void Update();
 }

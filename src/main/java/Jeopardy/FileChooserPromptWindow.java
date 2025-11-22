@@ -6,13 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.File;
 
-public class FileChooserPromptWindow {
+public class FileChooserPromptWindow implements LogSubject{
     private JDialog dialog;
     private List<Category> categories;
     private String filePath;
     private File file;
+    private LogObserver eventLogger;
 
-    public FileChooserPromptWindow(){
+    public FileChooserPromptWindow(Observer o){
+        LinkObserver(o);
+
+        LogEvent startupEvent = new LogEvent.Builder()
+                .playerName("System")
+                .activity("Start Game")
+                .build();
+        UpdateLogObserver(startupEvent);
+
         categories = new ArrayList<Category>();
         //frame to hold dialog
         JFrame frame = new JFrame();
@@ -44,6 +53,12 @@ public class FileChooserPromptWindow {
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             createCategories(file);
+            LogEvent fileLoadEvent = new LogEvent.Builder()
+                    .playerName("System")
+                    .activity("File Load")
+                    .result("Success")
+                    .build();
+            UpdateLogObserver(fileLoadEvent);
             dialog.dispose();
         });
 
@@ -59,5 +74,30 @@ public class FileChooserPromptWindow {
 
     public List<Category> getCategories(){
         return this.categories;
+    }
+
+    @Override
+    public void LinkObserver(Observer o) {
+        this.eventLogger = (LogObserver) o;
+    }
+
+    @Override
+    public void UnlinkObserver(Observer o) {
+
+    }
+
+    @Override
+    public void LinkLogObserver(Observer o) {
+
+    }
+
+    @Override
+    public void UpdateLogObserver(LogEvent logEvent) {
+        this.eventLogger.Update(logEvent);
+    }
+
+    @Override
+    public void UpdateObservers() {
+
     }
 }

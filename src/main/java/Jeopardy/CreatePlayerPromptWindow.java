@@ -3,10 +3,13 @@ package Jeopardy;
 import javax.swing.*;
 import java.awt.*;
 
-public class CreatePlayerPromptWindow {
+public class CreatePlayerPromptWindow implements LogSubject{
     private Player player;
+    private LogObserver eventLogger;
 
-    public CreatePlayerPromptWindow(int i){
+    public CreatePlayerPromptWindow(int i, Observer o){
+        LinkObserver(o);
+
         //frame to hold dialog
         JFrame frame = new JFrame();
         //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,6 +28,12 @@ public class CreatePlayerPromptWindow {
         JButton submit = new JButton("Submit");
         submit.addActionListener(e -> {
             player = new Player(i + 1, nameField.getText());
+            LogEvent createPlayerEvent = new LogEvent.Builder()
+                    .playerName(player.getName())
+                    .activity("Create Player")
+                    .answerGiven(player.getName())
+                    .build();
+            UpdateLogObserver(createPlayerEvent);
             dialog.dispose();
         });
 
@@ -36,5 +45,30 @@ public class CreatePlayerPromptWindow {
 
     public Player getPlayer(){
         return player;
+    }
+
+    @Override
+    public void LinkLogObserver(Observer o) {
+
+    }
+
+    @Override
+    public void UpdateLogObserver(LogEvent logEvent) {
+        eventLogger.Update(logEvent);
+    }
+
+    @Override
+    public void LinkObserver(Observer o) {
+        this.eventLogger = (LogObserver) o;
+    }
+
+    @Override
+    public void UnlinkObserver(Observer o) {
+
+    }
+
+    @Override
+    public void UpdateObservers() {
+
     }
 }

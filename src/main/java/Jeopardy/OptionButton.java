@@ -2,24 +2,37 @@ package Jeopardy;
 
 import javax.swing.*;
 
-public class OptionButton implements ScoreSubject, ButtonLockSubject {
+public class OptionButton implements ScoreSubject, ButtonLockSubject, LogSubject , GameManagerLink, EventLogLink{
 
     private JButton oBtn;
     private boolean correct;
     private ScoreObserver gM;
+    private GameManager gameManager;
+    private LogObserver logObserver;
     private ButtonLockObserver button;
     private int score;
+    private String result;
 
     public OptionButton(Option o, QuestionWindow qW){
         oBtn = new JButton(o.getContent());
         score = qW.getScore();
         oBtn.addActionListener(e ->{
             if(this.correct == true)
-                System.out.println("CORRECT");
+                result = "CORRECT";
             else
-                System.out.println("WRONG");
+                result = "INCORRECT";
             UpdateObserverScore(this.correct);
             UpdateLockObserver(button);
+            LogEvent playEvent = new LogEvent.Builder()
+                    .playerName(gameManager.getCurrentPlayer().getName())
+                    .activity("Answering Question")
+                    .category(qW.getCategory().getName())
+                    .questionValue(score)
+                    .answerGiven(o.getContent()+"")
+                    .result(result)
+                    .scoreAfterPlay(gameManager.getCurrentPlayer().getScore()+"")
+                    .build();
+            UpdateLogObserver(playEvent);
             qW.getDialog().dispose();
         });
     }
@@ -62,5 +75,25 @@ public class OptionButton implements ScoreSubject, ButtonLockSubject {
     @Override
     public void UpdateLockObserver(Observer o) {
         o.Update();
+    }
+
+    @Override
+    public void LinkLogObserver(Observer o) {
+        this.logObserver = (LogObserver) o;
+    }
+
+    @Override
+    public void UpdateLogObserver(LogEvent logEvent) {
+        this.logObserver.Update(logEvent);
+    }
+
+    @Override
+    public void LinkGameManager(GameManager gM) {
+        this.gameManager = gM;
+    }
+
+    @Override
+    public void LinkEventLog(Observer o) {
+        this.logObserver = (LogObserver) o;
     }
 }
