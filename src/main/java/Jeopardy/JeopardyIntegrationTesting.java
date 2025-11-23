@@ -24,21 +24,24 @@ class IntegrationTest {
 
     @Test
     void testCompleteGameFlow() {
-        // Create categories from CSV
+
+
         List<Category> categories = CSVInput.createCategories(TEST_CSV);
         assertNotNull(categories);
         assertEquals(1, categories.size());
 
-        // Create players
         List<Player> players = new ArrayList<>();
         players.add(new Player(1, "Player1"));
         players.add(new Player(2, "Player2"));
 
-        // Initialize game manager
+        
+       
+       
+        //Initialize game manager
         GameManager gm = new GameManager();
         gm.addPlayers(players);
 
-        // Simulate game play
+        // Simulate gameplay
         Player firstPlayer = gm.getCurrentPlayer();
         assertEquals("Player1", firstPlayer.getName());
 
@@ -73,6 +76,7 @@ class IntegrationTest {
         GameManager gm = new GameManager();
         gm.addPlayers(players);
 
+        
         // Simulate correct answers
         player.addToScore(100);
         player.addToScore(200);
@@ -95,6 +99,7 @@ class IntegrationTest {
         GameManager gm = new GameManager();
         gm.addPlayers(players);
 
+        
         // Simulate turns
         gm.UpdateScore(100);  // Alice
         gm.UpdateScore(200);  // Bob
