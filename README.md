@@ -91,7 +91,6 @@ Describe the class diagram here.
 
 ### **UML Class Diagram**
 
-*Place your class diagram here…*
 ![](/ClassDiagram.png)
 
 ---
