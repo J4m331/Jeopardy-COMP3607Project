@@ -26,13 +26,41 @@ This project applies Object-Oriented Design, SOLID principles, and three design 
 ### **Design Patterns Used**
 
 * **Observer Pattern**
-  *Why this pattern was chosen and how it is applied in the project.*
+
+  ***Why it was chosen:***
+
+  The Jeopardy Game contains multiple UI components and game systems that must react to events such as score updates, question selection, button locking, and logging. Using the Observer pattern prevents tight coupling by separating event producers (subjects) from event consumers (observers). This supports the project requirement for clean design, scalable UI updates, and real-time Process Mining logging.
+   
+  ***How it is applied:***
+
+  The project defines generic Subject and Observer interfaces, along with specialized variants for different responsibilities (e.g., ScoreObserver, LogObserver, ButtonLockObserver, ScoreUIObserver).
+  UI components and game objects receive updates without depending on concrete classes.
+
 
 * **Builder Pattern**
-  *Justification and usage.*
+
+  ***Why it was chosen:***
+
+  Some objects in the system, such as event log entries, contain many fields. Creating these using long constructors is error-prone and difficult to read. The Builder pattern enables clean construction of structured objects, especially those written to the process mining CSV log.
+
+   ***How it is applied:***
+
+  The LogEvent class uses an internal Builder class to fluently assemble complete event records before they are passed to the logger. This ensures that each logged interaction conforms to the mandatory fields required by the assignment (Case_ID, Player_ID, Activity, Timestamp, etc.).
 
 * **Composite Pattern**
-*Add explanations here…*
+
+   ***Why it was chosen:***
+   
+   Game data is naturally hierarchical:
+   * A Category contains multiple Questions.
+   * A Question contains multiple Options.
+     
+   This structure benefits from a composition-based model where larger components are built from smaller ones. It simplifies traversal, status checks, and UI representation of the Jeopardy board.
+   
+   ***How it is applied:***
+   
+   The Category class maintains a list of Question objects and provides operations such as addQuestion(...) and allAnswered(). Each Question stores a list of answer options.
+   It models the problem domain with nested, composable objects, making it easy to manage question availability and UI rendering.
 
 ---
 
