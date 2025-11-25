@@ -1,4 +1,5 @@
-package Jeopardy;
+import Jeopardy.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
