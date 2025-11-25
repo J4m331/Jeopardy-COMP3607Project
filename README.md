@@ -4,7 +4,7 @@
 
 ### **Team Members**
 
-* *Jameel Ali - 816040972*
+* *Jameel Ali -*
 * *Matthew Moodoo -*
 * *Nathan Baptiste - 816039236*
 
@@ -59,29 +59,58 @@ This project applies Object-Oriented Design, SOLID principles, and three design 
    
    ***How it is applied:***
    
-   The Category class maintains a list of Question objects and provides operations such as addQuestion(...) and allAnswered(). Each Question stores a list of answer options.
+   The Category class maintains a list of Question objects and provides operations such as addQuestion() and allAnswered(). Each Question stores a list of answer options.
    It models the problem domain with nested, composable objects, making it easy to manage question availability and UI rendering.
 
 ---
 
 ### **SOLID Principles**
 
-* **S – Single Responsibility Principle**
-  *How classes were kept focused on a single purpose.*
+* **Single Responsibility Principle**
 
-* **O – Open/Closed Principle**
-  *Where the system allows extension without modifying existing code.*
+  Each class handles exactly one core responsibility:
+  * EventLogger → Manages event logging and writing to game_event_log.csv.
+  * ReportGenerator → Creates the summary report file.
+  * Player → Stores and manages individual player data and scoring.
+  * QuestionWindow → Displays a single question and links its option buttons.
+  * Category & Question → Store question structures only.
 
-* **L – Liskov Substitution Principle**
-  *How inheritance or interfaces were structured.*
+* **Open/Closed Principle**
 
-* **I – Interface Segregation Principle**
-  *How interfaces were kept small and specific.*
+  The Observer and Link interfaces allow new behaviors to be added without modifying existing classes.
 
-* **D – Dependency Inversion Principle**
-  *How high-level modules depend on abstractions instead of concrete classes.*
+  For example:
+  * Adding a new ScoreObserver class requires no changes to OptionButton or GameManager.
+  * Adding a new LogObserver implementation simply requires attaching it as an observer.
 
-*Add details here…*
+* **Liskov Substitution Principle**
+
+  The system programs against interfaces (Subject, Observer, LogObserver, ScoreObserver). Any implementation of these interfaces can replace another without breaking functionality.
+
+  For example:
+  * EventLogger can act as any LogObserver.
+  * A new UI class that implements ScoreUIObserver can be attached wherever the interface is expected.
+
+* **Interface Segregation Principle**
+  
+  The project defines small, role-specific interfaces:
+  * ScoreObserver
+  * LogObserver
+  * ButtonLockObserver
+  * ScoreComponentLink
+  * EventLogLink
+  
+  Classes implement only what they need.
+
+  For example, a UI class that only updates the scoreboard implements ScoreObserver without being forced to implement unrelated methods.
+
+* **Dependency Inversion Principle**
+
+  High-level modules (UI, game logic) depend on abstractions rather than concrete classes.
+
+  For example:
+  * QuestionWindow takes observers via LinkObserver, which accepts the Observer interface, not a concrete GameManager.
+  * OptionButton communicates through interfaces (ScoreObserver, LogObserver) rather than importing specific implementations.
 
 ---
 
