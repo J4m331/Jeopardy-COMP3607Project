@@ -1,32 +1,37 @@
-package Jeopardy;
+import Jeopardy.GameManager;
+import Jeopardy.Player;
+import Jeopardy.PlayersPanel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class GameManagerTest {
+public class GameManagerTesting {
     private GameManager gameManager;
     private List<Player> players;
+    private PlayersPanel playersPanel;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         gameManager = new GameManager();
         players = new ArrayList<>();
         players.add(new Player(1, "Alice"));
         players.add(new Player(2, "Bob"));
         players.add(new Player(3, "Charlie"));
+        playersPanel = new PlayersPanel(players);
+        gameManager.LinkObserver(playersPanel);
     }
 
     @Test
-    void testAddPlayers() {
+    public void testAddPlayers() {
         gameManager.addPlayers(players);
         assertEquals(3, gameManager.getPlayers().size());
         assertEquals("Alice", gameManager.getCurrentPlayer().getName());
     }
 
     @Test
-    void testUpdateScore() {
+    public void testUpdateScore() {
         gameManager.addPlayers(players);
         Player firstPlayer = gameManager.getCurrentPlayer();
         
@@ -37,7 +42,7 @@ class GameManagerTest {
     }
 
     @Test
-    void testShiftPlayer() {
+    public void testShiftPlayer() {
         gameManager.addPlayers(players);
         
         assertEquals("Alice", gameManager.getCurrentPlayer().getName());
@@ -50,7 +55,7 @@ class GameManagerTest {
     }
 
     @Test
-    void testPlayerRotation() {
+    public void testPlayerRotation() {
         gameManager.addPlayers(players);
         
         for (int i = 0; i < 10; i++) {

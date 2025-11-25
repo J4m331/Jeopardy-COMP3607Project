@@ -1,30 +1,30 @@
-package Jeopardy;
+import Jeopardy.Player;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
-class PlayerScoreTesting{
+public class PlayerScoreTesting{
     private Player player;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         player = new Player(1, "TestPlayer");
     }//Initial setup with a Player named TestPlayer with an ID of 1.
 
     @Test
-    void addScoreTest(){
+    public void addScoreTest(){
         player.addToScore(100);
         assertEquals(100, player.getScore());
     }//Test to ensure that adding to a player's score works correctly.
 
     @Test
-    void deductScoreTest(){
+    public void deductScoreTest(){
         player.addToScore(-50);
         assertEquals(-50, player.getScore());
     }//Test to ensure that deducting from a player's score works correctly.
 
     @Test
-    void multiScoreTest(){
+    public void multiScoreTest(){
         player.addToScore(200);
         player.addToScore(300);
         player.addToScore(-75);

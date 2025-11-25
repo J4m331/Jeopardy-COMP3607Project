@@ -1,4 +1,6 @@
-package Jeopardy;
+import Jeopardy.CSVInput;
+import Jeopardy.Category;
+import Jeopardy.Question;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,11 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
-class CSVInputTest {
+public class CSVInputTesting {
     private static final String TEST_CSV_PATH = "test_questions.csv";
 
     @BeforeAll
-    static void setupTestCSV() throws IOException {
+    public static void setupTestCSV() throws IOException {
         try (FileWriter writer = new FileWriter(TEST_CSV_PATH)) {
             writer.write("Category,Value,Question,OptionA,OptionB,OptionC,OptionD,CorrectAnswer\n");
             writer.write("Math,100,What is 2+2?,3,4,5,6,B\n");
@@ -21,7 +23,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testCreateCategories() {
+    public void testCreateCategories() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         
         assertNotNull(categories);
@@ -29,7 +31,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testCategoryNames() {
+    public void testCategoryNames() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         
         boolean hasMath = false;
@@ -45,7 +47,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testQuestionsPerCategory() {
+    public void testQuestionsPerCategory() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         
         for (Category c : categories) {
@@ -54,7 +56,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testQuestionValues() {
+    public void testQuestionValues() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         
         for (Category c : categories) {
@@ -65,7 +67,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testQuestionOptions() {
+    public void testQuestionOptions() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         Category firstCategory = categories.get(0);
         Question firstQuestion = firstCategory.getQuestions().get(0);
@@ -74,7 +76,7 @@ class CSVInputTest {
     }
 
     @Test
-    void testCorrectAnswers() {
+    public void testCorrectAnswers() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV_PATH);
         
         for (Category c : categories) {
