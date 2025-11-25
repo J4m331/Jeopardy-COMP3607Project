@@ -1,10 +1,10 @@
-package Jeopardy;
+import Jeopardy.LogEvent;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class LogEventTest {
+public class EventLoggingTesting {
     @Test
-    void testBuilderPattern() {
+    public void testBuilderPattern() {
         LogEvent event = new LogEvent.Builder()
                 .playerName("TestPlayer")
                 .activity("Test Activity")
@@ -25,7 +25,7 @@ class LogEventTest {
     }
 
     @Test
-    void testBuilderWithPartialData() {
+    public void testBuilderWithPartialData() {
         LogEvent event = new LogEvent.Builder()
                 .playerName("Player1")
                 .activity("Start Game")
@@ -38,7 +38,7 @@ class LogEventTest {
     }
 
     @Test
-    void testMultipleBuilds() {
+    public void testMultipleBuilds() {
         LogEvent event1 = new LogEvent.Builder()
                 .playerName("Player1")
                 .result("CORRECT")

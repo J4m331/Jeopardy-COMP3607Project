@@ -1,16 +1,19 @@
-package Jeopardy;
 import java.util.ArrayList;
 import java.util.List;
+
+import Jeopardy.Category;
+import Jeopardy.Option;
+import Jeopardy.Question;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
-class CategoryTest {
+public class CategoryTesting {
     private Category category;
     private List<Option> options;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         category = new Category("Science");
         options = new ArrayList<>();
         options.add(new Option('A', "Answer A"));
@@ -20,20 +23,20 @@ class CategoryTest {
     }
 
     @Test
-    void testCategoryCreation() {
+    public void testCategoryCreation() {
         assertEquals("Science", category.getName());
         assertTrue(category.getQuestions().isEmpty());
     }
 
     @Test
-    void testAddQuestion() {
+    public void testAddQuestion() {
         Question q = new Question(100, "Test?", options, 'A');
         category.addQuestion(q);
         assertEquals(1, category.getQuestions().size());
     }
 
     @Test
-    void testAddMultipleQuestions() {
+    public void testAddMultipleQuestions() {
         for (int i = 0; i < 5; i++) {
             Question q = new Question((i + 1) * 100, "Question " + i, options, 'A');
             category.addQuestion(q);
@@ -42,12 +45,12 @@ class CategoryTest {
     }
 
     @Test
-    void testAllAnsweredWhenEmpty() {
+    public void testAllAnsweredWhenEmpty() {
         assertTrue(category.allAnswered());
     }
 
     @Test
-    void testAllAnsweredWithUnanswered() {
+    public void testAllAnsweredWithUnanswered() {
         Question q1 = new Question(100, "Q1", options, 'A');
         Question q2 = new Question(200, "Q2", options, 'B');
         category.addQuestion(q1);
@@ -57,7 +60,7 @@ class CategoryTest {
     }
 
     @Test
-    void testAllAnsweredWhenAllMarked() {
+    public void testAllAnsweredWhenAllMarked() {
         Question q1 = new Question(100, "Q1", options, 'A');
         Question q2 = new Question(200, "Q2", options, 'B');
         q1.markAnswered();

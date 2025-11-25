@@ -1,4 +1,4 @@
-package Jeopardy;
+import Jeopardy.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
-class IntegrationTest {
+public class JeopardyIntegrationTesting {
     private static final String TEST_CSV = "integration_test.csv";
 
     @BeforeAll
-    static void setupTestData() throws IOException {
+    public static void setupTestData() throws IOException {
         try (FileWriter writer = new FileWriter(TEST_CSV)) {
             writer.write("Category,Value,Question,OptionA,OptionB,OptionC,OptionD,CorrectAnswer\n");
             writer.write("Test,100,Q1?,A1,A2,A3,A4,A\n");
@@ -23,7 +23,7 @@ class IntegrationTest {
     }
 
     @Test
-    void testCompleteGameFlow() {
+    public void testCompleteGameFlow() {
 
 
         List<Category> categories = CSVInput.createCategories(TEST_CSV);
@@ -39,7 +39,9 @@ class IntegrationTest {
        
         //Initialize game manager
         GameManager gm = new GameManager();
+        PlayersPanel playersPanel = new PlayersPanel(players);
         gm.addPlayers(players);
+        gm.LinkObserver(playersPanel);
 
         // Simulate gameplay
         Player firstPlayer = gm.getCurrentPlayer();
@@ -53,7 +55,7 @@ class IntegrationTest {
     }
 
     @Test
-    void testCategoryWithAllQuestions() {
+    public void testCategoryWithAllQuestions() {
         List<Category> categories = CSVInput.createCategories(TEST_CSV);
         Category category = categories.get(0);
         
@@ -68,7 +70,7 @@ class IntegrationTest {
     }
 
     @Test
-    void testPlayerScoreProgression() {
+    public void testPlayerScoreProgression() {
         List<Player> players = new ArrayList<>();
         Player player = new Player(1, "TestPlayer");
         players.add(player);
@@ -90,14 +92,16 @@ class IntegrationTest {
     }
 
     @Test
-    void testMultiplePlayersScoring() {
+    public void testMultiplePlayersScoring() {
         List<Player> players = new ArrayList<>();
         players.add(new Player(1, "Alice"));
         players.add(new Player(2, "Bob"));
         players.add(new Player(3, "Charlie"));
 
         GameManager gm = new GameManager();
+        PlayersPanel playersPanel = new PlayersPanel(players);
         gm.addPlayers(players);
+        gm.LinkObserver(playersPanel);
 
         
         // Simulate turns
@@ -112,7 +116,7 @@ class IntegrationTest {
     }
 
     @Test
-    void testEventLoggingIntegration() {
+    public void testEventLoggingIntegration() {
         EventLogger logger = EventLogger.getEventLoggerInstance();
         
         LogEvent event = new LogEvent.Builder()

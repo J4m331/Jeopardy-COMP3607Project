@@ -1,4 +1,5 @@
-package Jeopardy;
+import Jeopardy.EventLogger;
+import Jeopardy.LogEvent;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
@@ -6,30 +7,30 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-class EventLoggerTest {
+public class EventLoggerTesting {
     private EventLogger logger;
     private static final String LOG_FILE = "game_event_log.csv";
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         logger = EventLogger.getEventLoggerInstance();
     }
 
     @Test
-    void testSingletonPattern() {
+    public void testSingletonPattern() {
         EventLogger logger1 = EventLogger.getEventLoggerInstance();
         EventLogger logger2 = EventLogger.getEventLoggerInstance();
         assertSame(logger1, logger2);
     }
 
     @Test
-    void testLogFileCreation() {
+    public void testLogFileCreation() {
         File logFile = new File(LOG_FILE);
         assertTrue(logFile.exists());
     }
 
     @Test
-    void testLogEvent() throws Exception {
+    public void testLogEvent() throws Exception {
         LogEvent event = new LogEvent.Builder()
                 .playerName("TestPlayer")
                 .activity("Test Activity")
@@ -43,7 +44,7 @@ class EventLoggerTest {
     }
 
     @Test
-    void testLogFileHeaders() throws Exception {
+    public void testLogFileHeaders() throws Exception {
         try (BufferedReader br = new BufferedReader(new FileReader(LOG_FILE))) {
             String header = br.readLine();
             assertTrue(header.contains("Case_ID"));
@@ -54,7 +55,7 @@ class EventLoggerTest {
     }
 
     @Test
-    void testMultipleLogEvents() throws Exception {
+    public void testMultipleLogEvents() throws Exception {
         long initialSize = new File(LOG_FILE).length();
 
         for (int i = 0; i < 5; i++) {
