@@ -4,7 +4,7 @@
 
 ### **Team Members**
 
-* *Jameel Ali -*
+* *Jameel Ali - 816040972*
 * *Matthew Moodoo -*
 * *Nathan Baptiste - 816039236*
 
@@ -92,6 +92,7 @@ Describe the class diagram here.
 ### **UML Class Diagram**
 
 *Place your class diagram here…*
+![](/ClassDiagram.png)
 
 ---
 
