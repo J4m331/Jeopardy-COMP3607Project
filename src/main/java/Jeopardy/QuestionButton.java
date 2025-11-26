@@ -1,6 +1,7 @@
 package Jeopardy;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class QuestionButton implements ScoreComponentLink, ButtonLockObserver, GameManagerLink, EventLogLink{
 
@@ -10,6 +11,12 @@ public class QuestionButton implements ScoreComponentLink, ButtonLockObserver, G
 
     public QuestionButton(Question q, Category c){
         qBtn = new JButton(q.getScore()+"");
+
+        Font buttonFont = new Font("Impact",Font.BOLD,50);
+        qBtn.setFont(buttonFont);
+        qBtn.setForeground(Color.ORANGE);
+        qBtn.setBackground(new Color(0,0,160));
+
         this.qW = new QuestionWindow(q,c);
         this.locked = false;
         LinkLockObserver(this);
@@ -35,6 +42,7 @@ public class QuestionButton implements ScoreComponentLink, ButtonLockObserver, G
     public void Update() {
         this.qBtn.setEnabled(false);
         this.locked = true;
+        this.qBtn.setBackground(new Color(0,0,80));
     }
 
     @Override

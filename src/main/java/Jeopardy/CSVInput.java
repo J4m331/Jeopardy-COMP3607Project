@@ -17,10 +17,6 @@ public class CSVInput {
 
             List<Category> categories = new ArrayList<>();
 
-/*            for(String[] row:rows){
-                System.out.println(row.length);
-            }*/
-
             for(String[] row:rows){ //Creates Categories, ensures there are no duplicate categories
                 String name = row[0];
                 boolean exists = false;
@@ -33,10 +29,6 @@ public class CSVInput {
                     categories.add(category);
                 }
             }
-
-/*            for(Category c: categories){
-                System.out.println(c.getName());
-            }*/
 
             for(String[] row:rows){ //Creates Questions and options for the questions
                 Option A = new Option('A', row[3]);
@@ -57,18 +49,6 @@ public class CSVInput {
                         c.addQuestion(question);
                 }
             }
-
-/*            for(String[] row:rows){
-                System.out.println(String.join(" , ", row));
-            }*/
-
-/*            for(Category c:categories){
-                for(Question q:c.getQuestions()){
-                    for(Option o:q.getOptions()){
-                        //System.out.println(o.content);
-                    }
-                }
-            }*/
 
             return categories;
         } catch (Exception e) {

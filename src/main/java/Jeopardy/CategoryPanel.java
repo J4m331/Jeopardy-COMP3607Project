@@ -11,7 +11,17 @@ public class CategoryPanel extends JPanel implements ScoreComponentLink, GameMan
     private List<QuestionButton> questionButtons;
 
     public CategoryPanel(Category c){
-        JTextArea categoryTitle = new JTextArea(c.getName());
+        setLayout(new BorderLayout()); //Forces panel to take up entire space
+
+        JLabel categoryTitle = new JLabel(c.getName());
+
+        Font categoryFont = new Font("Impact",0,30);
+        categoryTitle.setFont(categoryFont);
+        categoryTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        categoryTitle.setOpaque(true);
+        categoryTitle.setForeground(Color.ORANGE);
+        categoryTitle.setBackground(new Color(0,0,120));
+
         questionButtons = new ArrayList<QuestionButton>();
         panel.add(categoryTitle);
 
@@ -20,7 +30,7 @@ public class CategoryPanel extends JPanel implements ScoreComponentLink, GameMan
             panel.add(questionBtn.getButton());
             questionButtons.add(questionBtn);
         }
-        add(panel);
+        add(panel, BorderLayout.CENTER);
     }
 
     @Override

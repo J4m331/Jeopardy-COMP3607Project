@@ -32,10 +32,10 @@ public class ReportGenerator {
                 }
 
                 for(String[] row:rows){
-                    fw.append("Turn " + ((Integer.parseInt(row[0])) - 4) + "\n\n\n");
+                    fw.append("Turn " + ((Integer.parseInt(row[0])) - 4) + "\n");
                     fw.append(row[1] + " picked category " + row[4] + " for " + row[5] + "\n");
                     fw.append(row[1] + " answered " + row[6] + " which was " + row[7] + "\n");
-                    fw.append(row[1] + " currently has " + row[8] + " points.\n");
+                    fw.append(row[1] + " currently has " + row[8] + " points.\n\n\n");
                 }
 
             } catch (Exception e){

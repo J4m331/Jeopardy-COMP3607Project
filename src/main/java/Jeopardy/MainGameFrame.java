@@ -16,7 +16,7 @@ public class MainGameFrame extends JFrame implements ScoreComponentLink , GameMa
 
     public MainGameFrame(List<Category> categories, GameManager gM, Observer gameManager, EventLogger eventLogger){
         mainPanel = new JPanel(new BorderLayout());
-        mainGamePanel = new JPanel(new GridLayout(1,5));
+        mainGamePanel = new JPanel(new GridLayout(1,5,0,0));
         playersPanel = new PlayersPanel(gM.getPlayers());
         setTitle("Jeopardy");
         setSize(1920,1080);
