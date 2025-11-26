@@ -29,15 +29,13 @@ public class ReportGenerator {
                 for(int i = 0; i < (4 + players.size()); i++)
                     rows.remove(rows.getFirst()); //Removes first 4 rows, unnecessary data and header as well as player creation
 
+                int turn = 1;
                 for(String[] row:rows){
-                    //System.out.println(row.length);
-                }
-
-                for(String[] row:rows){
-                    fw.append("Turn " + ((Integer.parseInt(row[0])) - 4) + "\n");
+                    fw.append("Turn " + turn + "\n");
                     fw.append(row[1] + " picked category " + row[4] + " for " + row[5] + "\n");
                     fw.append(row[1] + " answered " + row[6] + " which was " + row[7] + "\n");
                     fw.append(row[1] + " currently has " + row[8] + " points.\n\n\n");
+                    turn++;
                 }
 
             } catch (Exception e){
