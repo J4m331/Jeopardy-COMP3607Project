@@ -4,8 +4,8 @@
 
 ### **Team Members**
 
-* *Jameel Ali - 816040972*
-* *Matthew Moodoo -*
+* *Jameel Ali -*
+* *Matthew Moodoo - 816039942*
 * *Nathan Baptiste - 816039236*
 
 ### **Project Scope**
@@ -59,29 +59,58 @@ This project applies Object-Oriented Design, SOLID principles, and three design 
    
    ***How it is applied:***
    
-   The Category class maintains a list of Question objects and provides operations such as addQuestion(...) and allAnswered(). Each Question stores a list of answer options.
+   The Category class maintains a list of Question objects and provides operations such as addQuestion() and allAnswered(). Each Question stores a list of answer options.
    It models the problem domain with nested, composable objects, making it easy to manage question availability and UI rendering.
 
 ---
 
 ### **SOLID Principles**
 
-* **S – Single Responsibility Principle**
-  *How classes were kept focused on a single purpose.*
+* **Single Responsibility Principle**
 
-* **O – Open/Closed Principle**
-  *Where the system allows extension without modifying existing code.*
+  Each class handles exactly one core responsibility:
+  * EventLogger → Manages event logging and writing to game_event_log.csv.
+  * ReportGenerator → Creates the summary report file.
+  * Player → Stores and manages individual player data and scoring.
+  * QuestionWindow → Displays a single question and links its option buttons.
+  * Category & Question → Store question structures only.
 
-* **L – Liskov Substitution Principle**
-  *How inheritance or interfaces were structured.*
+* **Open/Closed Principle**
 
-* **I – Interface Segregation Principle**
-  *How interfaces were kept small and specific.*
+  The Observer and Link interfaces allow new behaviors to be added without modifying existing classes.
 
-* **D – Dependency Inversion Principle**
-  *How high-level modules depend on abstractions instead of concrete classes.*
+  For example:
+  * Adding a new ScoreObserver class requires no changes to OptionButton or GameManager.
+  * Adding a new LogObserver implementation simply requires attaching it as an observer.
 
-*Add details here…*
+* **Liskov Substitution Principle**
+
+  The system programs against interfaces (Subject, Observer, LogObserver, ScoreObserver). Any implementation of these interfaces can replace another without breaking functionality.
+
+  For example:
+  * EventLogger can act as any LogObserver.
+  * A new UI class that implements ScoreUIObserver can be attached wherever the interface is expected.
+
+* **Interface Segregation Principle**
+  
+  The project defines small, role-specific interfaces:
+  * ScoreObserver
+  * LogObserver
+  * ButtonLockObserver
+  * ScoreComponentLink
+  * EventLogLink
+  
+  Classes implement only what they need.
+
+  For example, a UI class that only updates the scoreboard implements ScoreObserver without being forced to implement unrelated methods.
+
+* **Dependency Inversion Principle**
+
+  High-level modules (UI, game logic) depend on abstractions rather than concrete classes.
+
+  For example:
+  * QuestionWindow takes observers via LinkObserver, which accepts the Observer interface, not a concrete GameManager.
+  * OptionButton communicates through interfaces (ScoreObserver, LogObserver) rather than importing specific implementations.
 
 ---
 
@@ -143,26 +172,50 @@ Describe the class diagram here.
 
 ## **Test Summary**
 
-### **Test Suite**
+## Test Suite
+The test suite developed for this game contains the following:
 
-Describe the tests you wrote:
+### Unit Tests
+- **PlayerTest**: Player creation, score management (positive/negative), cumulative scoring
+- **OptionTest**: Answer option creation, formatting, header differentiation
+- **QuestionTest**: Question creation, answered state tracking, score values, option retrieval
+- **CategoryTest**: Category management, question addition, completion tracking
+- **GameManagerTest**: Player rotation, score updates, turn management, current player tracking
+- **LogEventTest**: Builder pattern implementation, event data structure, partial/full data handling
+- **EventLoggerTest**: Singleton pattern, CSV logging, file creation, event persistence
+- **ReportGeneratorTest**: Text report generation, player scores, session rundown, file output
+- **CSVInputTest**: CSV parsing, category creation, question loading, data validation
 
-* Unit tests
-* Integration tests
-* Edge case handling
-* UI tests (if applicable)
+### Integration Tests
+- **IntegrationTest**: Complete game workflows including:
+  - CSV loading → Category creation → Player setup → GameManager initialization
+  - Multi-player scoring across multiple rounds
+  - Turn rotation and score progression
+  - Event logging throughout gameplay
+  - End-to-end game simulation
 
-*Add information here…*
+### Edge Case Handling
+- Single player games
+- Negative scores (incorrect answers)
+- Empty categories
+- Tied player scores
+- Missing or malformed CSV data
+- File I/O errors
 
-### **Test Results**
+### UI Tests
+Not applicable - UI components use Swing dialogs which require manual testing.
 
-Summarize findings:
+## Results
 
-* Pass/fail statistics
-* Known issues
-* Screenshots/logs (if necessary)
+### Pass/Fail Statistics
+- **Total Test Cases**: 79
+- **Expected Pass Rate**: 100% (All of the tests are designed to pass with correct implementation)
+- Run `mvn test` to generate current statistics.
 
-*Add results here…*
+### Known Issues
+- Tests create temporary files (`test_questions.csv`, `integration_test.csv`, `test_jeopardyGameReport.txt`) that are cleaned up after execution.
+- EventLogger singleton may persist state between test runs - restart test suite if needed.
+- CSV tests require write permissions in the project directory.
 
 ---
 
