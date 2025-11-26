@@ -5,7 +5,7 @@
 ### **Team Members**
 
 * *Jameel Ali -*
-* *Matthew Moodoo -*
+* *Matthew Moodoo - 816039942*
 * *Nathan Baptiste - 816039236*
 
 ### **Project Scope**
@@ -172,26 +172,50 @@ Describe the class diagram here.
 
 ## **Test Summary**
 
-### **Test Suite**
+## Test Suite
+The test suite developed for this game contains the following:
 
-Describe the tests you wrote:
+### Unit Tests
+- **PlayerTest**: Player creation, score management (positive/negative), cumulative scoring
+- **OptionTest**: Answer option creation, formatting, header differentiation
+- **QuestionTest**: Question creation, answered state tracking, score values, option retrieval
+- **CategoryTest**: Category management, question addition, completion tracking
+- **GameManagerTest**: Player rotation, score updates, turn management, current player tracking
+- **LogEventTest**: Builder pattern implementation, event data structure, partial/full data handling
+- **EventLoggerTest**: Singleton pattern, CSV logging, file creation, event persistence
+- **ReportGeneratorTest**: Text report generation, player scores, session rundown, file output
+- **CSVInputTest**: CSV parsing, category creation, question loading, data validation
 
-* Unit tests
-* Integration tests
-* Edge case handling
-* UI tests (if applicable)
+### Integration Tests
+- **IntegrationTest**: Complete game workflows including:
+  - CSV loading → Category creation → Player setup → GameManager initialization
+  - Multi-player scoring across multiple rounds
+  - Turn rotation and score progression
+  - Event logging throughout gameplay
+  - End-to-end game simulation
 
-*Add information here…*
+### Edge Case Handling
+- Single player games
+- Negative scores (incorrect answers)
+- Empty categories
+- Tied player scores
+- Missing or malformed CSV data
+- File I/O errors
 
-### **Test Results**
+### UI Tests
+Not applicable - UI components use Swing dialogs which require manual testing.
 
-Summarize findings:
+## Results
 
-* Pass/fail statistics
-* Known issues
-* Screenshots/logs (if necessary)
+### Pass/Fail Statistics
+- **Total Test Cases**: 79
+- **Expected Pass Rate**: 100% (All of the tests are designed to pass with correct implementation)
+- Run `mvn test` to generate current statistics.
 
-*Add results here…*
+### Known Issues
+- Tests create temporary files (`test_questions.csv`, `integration_test.csv`, `test_jeopardyGameReport.txt`) that are cleaned up after execution.
+- EventLogger singleton may persist state between test runs - restart test suite if needed.
+- CSV tests require write permissions in the project directory.
 
 ---
 
