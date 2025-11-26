@@ -4,7 +4,7 @@
 
 ### **Team Members**
 
-* *Jameel Ali -*
+* *Jameel Ali -816040972*
 * *Matthew Moodoo - 816039942*
 * *Nathan Baptiste - 816039236*
 
