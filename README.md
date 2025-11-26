@@ -116,8 +116,6 @@ This project applies Object-Oriented Design, SOLID principles, and three design 
 
 ## **Class Diagram**
 
-Describe the class diagram here.
-
 ### **UML Class Diagram**
 
 ![](/ClassDiagram.png)
@@ -221,8 +219,4 @@ Not applicable - UI components use Swing dialogs which require manual testing.
 
 ## **Demo Video**
 **Demo Video:**
-*Insert Link Here*
-
-## **Reflection Video**
-**Reflection Video:**
-*Insert Link Here*
+*https://youtu.be/aVqUsg7Gx90*
