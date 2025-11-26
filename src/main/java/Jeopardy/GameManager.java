@@ -36,8 +36,25 @@ public class GameManager implements ScoreObserver , ScoreUISubject{
 
     @Override
     public void UpdateScore(int score){
+        // Apply score to current player
         currentPlayer.addToScore(score);
-        shiftPlayer();
+
+        // Every answered question counts toward the question total
+        questionCount++;
+        UpdateUI(currentPlayer);
+        System.out.println(questionCount);
+
+        // End game check
+        if(questionCount > 24){
+            ReportGenerator.generateTextReport("jeopardyGameReport.txt", players, "game_event_log.csv");
+            System.exit(0);
+        }
+
+        // If the player lost points (incorrect answer), shift to next player.
+        // If they gained points, they keep control and do not shift.
+        if(score < 0) {
+            shiftPlayer();
+        }
     }
 
     public void shiftPlayer(){
@@ -46,12 +63,6 @@ public class GameManager implements ScoreObserver , ScoreUISubject{
             playerIndex = 0;
         currentPlayer = players.get(playerIndex);
         UpdateUI(currentPlayer);
-        questionCount++;
-        System.out.println(questionCount);
-        if(questionCount > 24){
-            ReportGenerator.generateTextReport("jeopardyGameReport.txt", players, "game_event_log.csv");
-            System.exit(0);
-        }
     }
 
     public Player getCurrentPlayer(){

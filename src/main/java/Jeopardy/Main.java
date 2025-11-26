@@ -15,7 +15,8 @@ public class Main {
         GameManager gM = new GameManager();
         gM.addPlayers(players);
 
-        new MainGameFrame(categories, gM, gM, eventLogger);
+        MainGameFrame mainFrame = new MainGameFrame(categories, gM, gM, eventLogger);
+        mainFrame.setVisible(true);
 
     }
 }
