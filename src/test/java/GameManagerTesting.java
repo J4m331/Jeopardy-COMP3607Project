@@ -1,6 +1,7 @@
-import Jeopardy.GameManager;
-import Jeopardy.Player;
-import Jeopardy.PlayersPanel;
+import Jeopardy.controller.GameManager;
+import Jeopardy.model.Player;
+import Jeopardy.view.PlayersPanel;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

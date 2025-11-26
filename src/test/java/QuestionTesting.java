@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import Jeopardy.Option;
-import Jeopardy.Question;
+import Jeopardy.model.Option;
+import Jeopardy.model.Question;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;

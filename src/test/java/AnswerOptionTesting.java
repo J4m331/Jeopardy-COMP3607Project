@@ -1,5 +1,7 @@
-import Jeopardy.Option;
 import org.junit.jupiter.api.Test;
+
+import Jeopardy.model.Option;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AnswerOptionTesting {

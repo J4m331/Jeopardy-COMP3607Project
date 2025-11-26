@@ -1,4 +1,5 @@
-import Jeopardy.*;
+import Jeopardy.controller.ReportGenerator;
+import Jeopardy.model.Player;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;

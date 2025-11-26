@@ -1,4 +1,12 @@
-import Jeopardy.*;
+import Jeopardy.controller.CSVInput;
+import Jeopardy.controller.EventLogger;
+import Jeopardy.controller.GameManager;
+import Jeopardy.model.Category;
+import Jeopardy.model.Player;
+import Jeopardy.model.Question;
+import Jeopardy.observer.LogEvent;
+import Jeopardy.view.PlayersPanel;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;

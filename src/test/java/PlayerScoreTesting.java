@@ -1,5 +1,7 @@
-import Jeopardy.Player;
 import org.junit.jupiter.api.Test;
+
+import Jeopardy.model.Player;
+
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 

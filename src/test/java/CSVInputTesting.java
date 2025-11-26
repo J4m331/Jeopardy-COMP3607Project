@@ -1,6 +1,7 @@
-import Jeopardy.CSVInput;
-import Jeopardy.Category;
-import Jeopardy.Question;
+import Jeopardy.controller.CSVInput;
+import Jeopardy.model.Category;
+import Jeopardy.model.Question;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import static org.junit.jupiter.api.Assertions.*;

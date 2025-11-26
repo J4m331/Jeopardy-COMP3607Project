@@ -1,5 +1,7 @@
-import Jeopardy.LogEvent;
 import org.junit.jupiter.api.Test;
+
+import Jeopardy.observer.LogEvent;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class EventLoggingTesting {
